@@ -1,15 +1,44 @@
-An Introduction to the Shell
+SIMPLE SHELL PROJECT
 
-The shell is a command-line interface that allows users to interact with their computer's operating system through text-based commands. It is a powerful tool used for various tasks, such as navigating the file system, running programs, and automating repetitive tasks.
+Introduction
 
-Some key points:
-1. Text-Based Interface: The shell operates entirely through text commands, which are entered through a terminal or command prompt. Users type commands and receive text-based responses.
-2. File System Navigation: One of the primary uses of the shell is to navigate the file system. Users can list files and directories, change directories, create, move, or delete files and directories using commands like ls, cd, mkdir, mv, and rm.
-3. Running Programs: The shell allows users to run programs by entering their names. It searches for the program in directories listed in the "PATH" environment variable. For example, typing firefox will launch the Firefox web browser if it's in the PATH.
-4. Piping and Redirection: Users can combine commands using pipes (|) to pass the output of one command as input to another. Redirection (>, >>, <) allows users to control input and output streams, enabling tasks like saving command output to files.
-5. Scripting: The shell supports scripting, which involves writing a series of shell commands in a script file. These scripts can be executed to automate tasks, making it useful for repetitive operations.
-6. Customization: Users can customize their shell environment by setting environment variables, configuring aliases, and creating startup scripts (e.g., .bashrc for Bash).
-7. Multiple Shells: There are various shell programs available, such as Bash, Zsh, and PowerShell, each with its features and capabilities. Users can choose the one that suits their needs.
-8. Tab Completion: Most shells provide tab completion, where users can press the Tab key to autocomplete commands, file paths, and directory names, improving efficiency.
+Welcome to our Custom Shell project! This collaborative effort aims to create a custom shell that emulates the functionality of the standard sh shell while following the Betty coding standard. This README serves as a guide to understanding our project.
 
-In summary, the shell is a versatile and text-based interface that empowers users to interact with their computer's operating system efficiently. It's a fundamental tool for system administration, programming, and automating tasks. Learning basic shell commands and concepts can significantly enhance your computer skills and productivity.
+Team Members
+
+Nwobum Ogechukwu
+Ade Adeniji
+
+Project Overview
+
+Our project focuses on building a custom shell, a fundamental tool for interacting with an operating system through text-based commands. Here's a brief overview of our objectives:
+
+1. Shell Functionality: Our custom shell will provide essential features such as executing commands, navigating the file system, and handling input/output.
+
+2. Compatibility: We aim to make our custom shell compatible with standard POSIX shell syntax and behavior, similar to the sh shell.
+
+3. Betty Standard: We are committed to maintaining code quality and readability by adhering to the Betty coding standard, ensuring clean and consistent code.
+
+Getting Started
+
+To use our custom shell, follow these steps:
+
+1. Clone the repository to your local machine.
+
+2. Build the shell.
+
+3. Run the shell.
+
+Usage:
+Our custom shell supports standard shell commands and features, making it familiar to users. You can:
+
+1. Execute commands.
+2. Navigate directories.
+3. Redirect input/output.
+4. Pipe commands.
+
+Example usage:
+$ ls -l
+$ cd /path/to/directory
+$ echo "Hello, world!" > output.txt
+$ cat input.txt | grep "keyword"
