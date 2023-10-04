@@ -7,6 +7,7 @@ Welcome to our Custom Shell project! This collaborative effort aims to create a 
 Team Members
 
 Nwobum Ogechukwu
+
 Ade Adeniji
 
 Project Overview
@@ -38,7 +39,11 @@ Our custom shell supports standard shell commands and features, making it famili
 4. Pipe commands.
 
 Example usage:
+
 $ ls -l
+
 $ cd /path/to/directory
+
 $ echo "Hello, world!" > output.txt
+
 $ cat input.txt | grep "keyword"
