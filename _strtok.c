@@ -1,4 +1,5 @@
 #include "test.h"
+
 /**
  * _strtok - Tokenizes a string.
  * @str: The string to be tokenized.
@@ -13,15 +14,14 @@ char *_strtok(const char *str, const char *delimiter)
 	const char *end;
 	char *token;
 
-	 if (str == NULL || delimiter == NULL)
-		 return (NULL);
-	 if (start == NULL)
-		 return (NULL);
+	if (str == NULL || delimiter == NULL)
+		return (NULL);
+	if (start == NULL)
+		return (NULL);
 	while (*start != '\0' && str_chr(delimiter, *start) != NULL)
 	{
 		start++;
 	}
-
 	if (*start == '\0')
 	{
 		token_start = NULL;
@@ -41,5 +41,6 @@ char *_strtok(const char *str, const char *delimiter)
 		token_start = end + 1;
 	}
 	token = _sdup(start);
+	printf("token = %s\n", token);
 	return (token);
 }

@@ -25,6 +25,14 @@ char *_cpy(char *destination, const char *source);
 size_t _len(const char *str);
 void _OA_printer(const char *letters);
 char *_strtok(const char *str, const char *delimiter);
+int check_script(const char *file_name);
+void is_interactive(void);
+int _minenv(void);
+void cmd_parse(char *cmd, char **av);
+int cmd_execute(char **argv);
+int execve_cmd(char *total_path, char **argv);
+char *search_cmd(char *input);
+char *_getminenv(const char *name);
 
 
 #endif
