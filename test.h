@@ -33,6 +33,6 @@ int cmd_execute(char **argv);
 int execve_cmd(char *total_path, char **argv);
 char *search_cmd(char *input);
 char *_getminenv(const char *name);
-
-
+int _int(char *_string);
+void exit_shell(int status); 
 #endif

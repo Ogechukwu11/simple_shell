@@ -86,7 +86,7 @@ int execve_cmd(char *total_path, char **argv)
 
 /**
  * cmd_execute - A function that executes commands
- * @argv: The array containing the arguements
+ * @argv: The array containing the arguments
  * Return: -1 on failure
  */
 int cmd_execute(char **argv)

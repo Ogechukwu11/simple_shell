@@ -1,45 +1,13 @@
 #include "test.h"
 
 /**
- * cmd_parse - To parse the input
- * @cmd: The command to parse
- * @av: The argument
+ * exit_shell - To exit the shell with an integer code
+ * @status: The integer code
  * Return: void
  */
-void cmd_parse(char *cmd, char **av)
+void exit_shell(int status)
 {
-	char *token;
-	int count = 0;
-
-	token = strtok(cmd, " ");
-	while (token != NULL)
-	{
-		av[count++] = token;
-		token = strtok(NULL, " ");
-	}
-
-	av[count] = NULL;
-}
-
-/**
- * _minenv - prints current environment
- * Return: Always 0
- */
-int _minenv(void)
-{
-	char **env = environ;
-
-	if (environ == NULL)
-	{
-		_OA_printer("Environment not available\n");
-		return (-1);
-	}
-	for (; *env != NULL; env++)
-	{
-		_OA_printer(*env);
-		_OA_printer("\n");
-	}
-	return (0);
+	exit(status);
 }
 
 /**
@@ -70,24 +38,25 @@ void is_interactive(void)
 		{
 			if (str_cmp(cmd_argv[0], "exit", _len("exit")) == 0)
 			{
-				free(s);
-				exit(0);
+				if (cmd_argv[1] != NULL)
+				{
+					exit_status = _int(cmd_argv[1]);
+					free(s), exit_shell(exit_status);
+				}
+				else
+					free(s), exit_shell(0);
 			}
 			else if (str_cmp(cmd_argv[0], "env", _len("env")) == 0)
 				_minenv();
 			else
 			{
 				exit_status = cmd_execute(cmd_argv);
-
 				if (exit_status == -1)
-				{
 					perror("Command execution failed");
-				}
 			}
 		}
 	}
 	free(s);
-
 }
 
 /**

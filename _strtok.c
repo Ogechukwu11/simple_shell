@@ -1,6 +1,48 @@
 #include "test.h"
 
 /**
+ * cmd_parse - To parse the input
+ * @cmd: The command to parse
+ * @av: The argument
+ * Return: void
+ */
+void cmd_parse(char *cmd, char **av)
+{
+	char *token;
+	int count = 0;
+
+	token = strtok(cmd, " ");
+	while (token != NULL)
+	{
+		av[count++] = token;
+		token = strtok(NULL, " ");
+	}
+
+	av[count] = NULL;
+}
+
+/**
+ * _minenv - prints current environment
+ * Return: Always 0
+ */
+int _minenv(void)
+{
+	char **env = environ;
+
+	if (environ == NULL)
+	{
+		_OA_printer("Environment not available\n");
+		return (-1);
+	}
+	for (; *env != NULL; env++)
+	{
+		_OA_printer(*env);
+		_OA_printer("\n");
+	}
+	return (0);
+}
+
+/**
  * _strtok - Tokenizes a string.
  * @str: The string to be tokenized.
  * @delimiter: A string containing all possible delimiters.
