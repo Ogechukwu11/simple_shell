@@ -24,5 +24,7 @@ int str_cmp(const char *seq1, const char *seq2, int len);
 char *_cpy(char *destination, const char *source);
 size_t _len(const char *str);
 void _OA_printer(const char *letters);
+char *_strtok(const char *str, const char *delimiter);
+
 
 #endif
