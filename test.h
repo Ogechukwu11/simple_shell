@@ -24,7 +24,7 @@ int str_cmp(const char *seq1, const char *seq2, int len);
 char *_cpy(char *destination, const char *source);
 size_t _len(const char *str);
 void _OA_printer(const char *letters);
-char *_strtok(const char *str, const char *delimiter);
+char *_strtok(char *str, const char *delimiter);
 int check_script(const char *file_name);
 void is_interactive(void);
 int _minenv(void);

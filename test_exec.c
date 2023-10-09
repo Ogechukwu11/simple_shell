@@ -37,7 +37,7 @@ char *search_cmd(char *input)
 	get_path = _getminenv("PATH");
 	copy_path = _sdup(get_path);
 	printf("copy_path = %s\n", copy_path);
-	token = _strtok(copy_path, ":");
+	token = strtok(copy_path, ":");
 	printf("token = %s\n", token);
 
 	while (token != NULL)
@@ -63,7 +63,7 @@ char *search_cmd(char *input)
 		}
 
 		free(total_path);
-		token = _strtok(NULL, ":");
+		token = strtok(NULL, ":");
 		printf("token2 = %s\n", token);
 	}
 	free(copy_path);
