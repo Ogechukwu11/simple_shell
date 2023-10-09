@@ -37,7 +37,7 @@ char *search_cmd(char *input)
 	get_path = _getminenv("PATH");
 	copy_path = _sdup(get_path);
 	printf("copy_path = %s\n", copy_path);
-	token = strtok(copy_path, ":");
+	token = _strtok(copy_path, ":");
 	printf("token = %s\n", token);
 
 	while (token != NULL)
@@ -53,8 +53,9 @@ char *search_cmd(char *input)
 
 		_cpy(total_path, token);
 		str_cat(total_path, "/");
+		printf("strcat total_path = %s\n", total_path);
 		str_cat(total_path, input);
-
+		printf("strcat input  = %s\n", total_path);
 		if (access(total_path, X_OK) == 0)
 		{
 			free(copy_path);
@@ -62,7 +63,8 @@ char *search_cmd(char *input)
 		}
 
 		free(total_path);
-		token = strtok(NULL, ":");
+		token = _strtok(NULL, ":");
+		printf("token2 = %s\n", token);
 	}
 	free(copy_path);
 	return (NULL);
@@ -94,11 +96,15 @@ int cmd_execute(char **argv)
 	pid_t child_pid;
 	int status;
 	char *total_path;
+	int flag = 0;
 
 	total_path = argv[0];
 
 	if (access(total_path, X_OK) != 0)
+	{
 		total_path = search_cmd(argv[0]);
+		flag = 1;
+	}
 	if (total_path == NULL)
 	{
 		perror("Command not found");
@@ -121,14 +127,14 @@ int cmd_execute(char **argv)
 		wait(&status);
 		if (WIFEXITED(status))
 		{
-			free(total_path);
+			if (flag)
+				free(total_path);
 			return (WEXITSTATUS(status));
 		}
 		else
 		{
 			perror("Command did not exit normally");
-			free(total_path);
-			return (-1);
+			exit(2);
 		}
 	}
 	return (0);
