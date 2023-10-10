@@ -36,9 +36,7 @@ char *search_cmd(char *input)
 
 	get_path = _getminenv("PATH");
 	copy_path = _sdup(get_path);
-	printf("copy_path = %s\n", copy_path);
 	token = _strtok(copy_path, ":");
-	printf("token = %s\n", token);
 
 	while (token != NULL)
 	{
@@ -53,9 +51,7 @@ char *search_cmd(char *input)
 
 		_cpy(total_path, token);
 		str_cat(total_path, "/");
-		printf("strcat total_path = %s\n", total_path);
 		str_cat(total_path, input);
-		printf("strcat input  = %s\n", total_path);
 		if (access(total_path, X_OK) == 0)
 		{
 			free(copy_path);
@@ -64,7 +60,6 @@ char *search_cmd(char *input)
 
 		free(total_path);
 		token = _strtok(NULL, ":");
-		printf("token2 = %s\n", token);
 	}
 	free(copy_path);
 	return (NULL);

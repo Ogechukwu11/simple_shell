@@ -11,9 +11,4 @@ void _OA_printer(const char *letters)
 	{
 		write(STDOUT_FILENO, letters, _len(letters));
 	}
-	else
-	{
-		write(STDERR_FILENO, letters, _len(letters));
-		exit(EXIT_FAILURE);
-	}
 }
