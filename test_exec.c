@@ -89,48 +89,67 @@ int execve_cmd(char *total_path, char **argv)
 int cmd_execute(char **argv)
 {
 	pid_t child_pid;
-	int status;
-	char *total_path;
+	int status, exec_result;
+	char *total_path, *searched_path;
 	int flag = 0;
 
 	total_path = argv[0];
 
 	if (access(total_path, X_OK) != 0)
 	{
-		total_path = search_cmd(argv[0]);
-		flag = 1;
-	}
-	if (total_path == NULL)
-	{
-		perror("Command not found");
-		return (-1);
+		searched_path = search_cmd(argv[0]);
+		if (searched_path != NULL)
+		{
+			total_path = searched_path;
+			flag = 1;
+		}
+		else
+		{
+			perror("Command not found");
+			return (-1);
+		}
 	}
 
 	child_pid = fork();
 	if (child_pid == -1)
 	{
 		perror("Fork failed");
+		if (flag)
+			free(total_path);
 		return (-1);
 	}
-
 	if (child_pid == 0)
 	{
-		return (execve_cmd(total_path, argv));
+		exec_result = execve_cmd(total_path, argv);
+		if (flag)
+			free(total_path);
+		exit(exec_result);
 	}
 	else
 	{
-		wait(&status);
-		if (WIFEXITED(status))
+		if (wait(&status) == -1)
+		{
+			perror("Wait failed");
+			if (flag)
+				free(total_path);
+			return (-1);
+		}
+
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		{
 			if (flag)
 				free(total_path);
-			return (WEXITSTATUS(status));
-		}
-		else
-		{
-			perror("Command did not exit normally");
 			exit(2);
 		}
+		else if (!WIFEXITED(status))
+		{
+			perror("Command did not exit normally");
+			if (flag)
+				free(total_path);
+			exit(2);
+		}
+		if (flag)
+			free(total_path);
+		return (WEXITSTATUS(status));
 	}
-	return (0);
 }
