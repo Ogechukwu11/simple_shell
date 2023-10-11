@@ -1,6 +1,29 @@
 #include "test.h"
 
 /**
+ * _getminenv - To get the value of an environment variable
+ * @name: Name of the variable to get
+ *
+ * Return: A pointer to the value
+ */
+char *_getminenv(const char *name)
+{
+	char **env = environ;
+	char *found;
+
+	while (*env != NULL)
+	{
+		found = *env;
+		if (str_cmp(found, name, _len(name)) == 0)
+		{
+			return (found + _len(name) + 1);
+		}
+		env++;
+	}
+	return (NULL);
+}
+
+/**
  * cmd_parse - To parse the input
  * @cmd: The command to parse
  * @av: The argument

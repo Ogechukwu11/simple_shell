@@ -1,29 +1,6 @@
 #include "test.h"
 
 /**
- * _getminenv - To get the value of an environment variable
- * @name: Name of the variable to get
- *
- * Return: A pointer to the value
- */
-char *_getminenv(const char *name)
-{
-	char **env = environ;
-	char *found;
-
-	while (*env != NULL)
-	{
-		found = *env;
-		if (str_cmp(found, name, _len(name)) == 0)
-		{
-			return (found + _len(name) + 1);
-		}
-		env++;
-	}
-	return (NULL);
-}
-
-/**
  * search_cmd - To search if the command is exec in PATH
  * @input: The array containing parsed input
  * Return: 0 success
@@ -82,33 +59,16 @@ int execve_cmd(char *total_path, char **argv)
 }
 
 /**
- * cmd_execute - A function that executes commands
- * @argv: The array containing the arguments
- * Return: -1 on failure
+ * exec_command - Execute the given command
+ * @total_path: The full path to the command
+ * @argv: The array containing the command and its arguments
+ * @flag: Flag to determine if total_path needs to be freed
+ * Return: The exit status of the executed command or -1 on failure
  */
-int cmd_execute(char **argv)
+int exec_command(char *total_path, char **argv, int flag)
 {
+	int exec_result, status;
 	pid_t child_pid;
-	int status, exec_result;
-	char *total_path, *searched_path;
-	int flag = 0;
-
-	total_path = argv[0];
-
-	if (access(total_path, X_OK) != 0)
-	{
-		searched_path = search_cmd(argv[0]);
-		if (searched_path != NULL)
-		{
-			total_path = searched_path;
-			flag = 1;
-		}
-		else
-		{
-			perror("Command not found");
-			return (-1);
-		}
-	}
 
 	child_pid = fork();
 	if (child_pid == -1)
@@ -134,22 +94,59 @@ int cmd_execute(char **argv)
 				free(total_path);
 			return (-1);
 		}
-
-		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		{
-			if (flag)
-				free(total_path);
-			exit(2);
-		}
-		else if (!WIFEXITED(status))
-		{
-			perror("Command did not exit normally");
-			if (flag)
-				free(total_path);
-			exit(2);
-		}
-		if (flag)
-			free(total_path);
-		return (WEXITSTATUS(status));
+		return (status);
 	}
+}
+
+/**
+ * handle_execute_error - Handle errors during command execution
+ * @flag: Flag to determine if total_path needs to be freed
+ * @total_path: The full path to the command
+ * @status: The status of the executed command
+ */
+void handle_execute_error(int flag, char *total_path, int status)
+{
+	if (flag)
+		free(total_path);
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+	{
+		exit(2);
+	}
+	else if (!WIFEXITED(status))
+	{
+		perror("Command did not exit normally");
+		exit(2);
+	}
+}
+
+/**
+ * cmd_execute - A function that executes commands
+ * @argv: The array containing the arguments
+ * Return: -1 on failure, else the exit status of the executed command
+ */
+int cmd_execute(char **argv)
+{
+	char *total_path, *searched_path;
+	int status, flag = 0;
+
+	total_path = argv[0];
+
+	if (access(total_path, X_OK) != 0)
+	{
+		searched_path = search_cmd(argv[0]);
+		if (searched_path != NULL)
+		{
+			total_path = searched_path;
+			flag = 1;
+		}
+		else
+		{
+			perror("Command not found");
+			return (-1);
+		}
+	}
+	status = exec_command(total_path, argv, flag);
+	handle_execute_error(flag, total_path, status);
+
+	return (WEXITSTATUS(status));
 }

@@ -34,5 +34,7 @@ int execve_cmd(char *total_path, char **argv);
 char *search_cmd(char *input);
 char *_getminenv(const char *name);
 int _int(char *_string);
-void exit_shell(int status); 
+void exit_shell(int status);
+void handle_execute_error(int flag, char *total_path, int status);
+int exec_command(char *total_path, char **argv, int flag);
 #endif
