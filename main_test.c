@@ -41,7 +41,14 @@ void is_interactive(void)
 				if (cmd_argv[1] != NULL)
 				{
 					exit_status = _int(cmd_argv[1]);
-					free(s), exit_shell(exit_status);
+					if (exit_status >= 0)
+						free(s), exit_shell(exit_status);
+					else
+					{
+						perror("Illegal number");
+						exit_shell(2);
+					}
+
 				}
 				else
 					free(s), exit_shell(0);
