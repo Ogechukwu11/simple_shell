@@ -29,11 +29,9 @@ void is_interactive(void)
 		byte_read = getline(&s, &b, stdin);
 		if (byte_read == -1)
 			free(s), exit(0);
-
 		if (s[byte_read - 1] == '\n')
 			s[byte_read - 1] = '\0';
 		cmd_parse(s, cmd_argv);
-
 		if (cmd_argv[0] != NULL)
 		{
 			if (str_cmp(cmd_argv[0], "exit", _len("exit")) == 0)
@@ -41,14 +39,7 @@ void is_interactive(void)
 				if (cmd_argv[1] != NULL)
 				{
 					exit_status = _int(cmd_argv[1]);
-					if (exit_status >= 0)
-						free(s), exit_shell(exit_status);
-					else
-					{
-						perror("Illegal number");
-						exit_shell(2);
-					}
-
+					free(s), exit_shell(exit_status);
 				}
 				else
 					free(s), exit_shell(0);
@@ -65,7 +56,6 @@ void is_interactive(void)
 	}
 	free(s);
 }
-
 /**
  * check_script - A function that checks script
  * @file_name: The name of the script
@@ -121,8 +111,6 @@ int main(int argc, char *argv[])
 		return (check_script(script_name));
 	}
 	else
-	{
 		is_interactive();
-	}
 	return (0);
 }

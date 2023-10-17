@@ -59,12 +59,10 @@ int _minenv(void)
 	}
 	for (; *env != NULL; env++)
 	{
-		_OA_printer(*env);
-		_OA_printer("\n");
+		_puts(*env);
 	}
 	return (0);
 }
-
 /**
  * _strtok - Tokenizes a string.
  * @str: The string to be tokenized.
