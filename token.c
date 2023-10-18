@@ -59,7 +59,7 @@ int _minenv(void)
 	}
 	for (; *env != NULL; env++)
 	{
-		_puts(*env);
+		_OA_printer(*env);
 	}
 	return (0);
 }
