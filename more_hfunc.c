@@ -69,3 +69,46 @@ void cleanup_info(info_t *info)
 	info->env_size = 0;
 	info->env_changed = 0;
 }
+/**
+ * _unsetenv - Remove an environment variable
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ * @var: the string env var property to unset
+ * Return: 0 if successful, -1 if the variable doesn't exist
+ */
+int _unsetenv(info_t *info, const char *var)
+{
+	size_t var_len = _len(var);
+	list_t *prev = NULL;
+	list_t *current = info->env;
+
+	if (!var)
+                return (-1);
+	while (current != NULL)
+	{
+		char *p = starts_with(current->str, var);
+
+		if (p && *p == '=' && strncmp(current->str, var, var_len) == 0)
+		{
+			if (prev == NULL)
+			{
+				info->env = current->next;
+			}
+			else
+			{
+				prev->next = current->next;
+			}
+
+			free(current->str);
+			free(current);
+			info->env_size--;
+			info->env_changed = 1;
+			return (0);
+		}
+
+		prev = current;
+		current = current->next;
+	}
+
+	return (-1);
+}
