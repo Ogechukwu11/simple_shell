@@ -83,7 +83,7 @@ int _unsetenv(info_t *info, const char *var)
 	list_t *current = info->env;
 
 	if (!var)
-                return (-1);
+		return (-1);
 	while (current != NULL)
 	{
 		char *p = starts_with(current->str, var);
