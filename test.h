@@ -44,7 +44,7 @@ extern char **environ;
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
-void _puts(char *str);
+void _puts(const char *str);
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 void initialize_info(info_t *info);
 void cleanup_info(info_t *info);
