@@ -73,4 +73,5 @@ int exec_command(char *total_path, char **argv, int flag);
 char *_memset(char *s, char b, unsigned int n);
 list_t *add_node_end(list_t **head, const char *str, int num);
 char *starts_with(const char *str, const char *prefix);
+int _unsetenv(info_t *info, const char *var);
 #endif
